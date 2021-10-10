@@ -19,7 +19,7 @@ const locations = [
   'Eldora Mountain Resort',
   'Big Sky',
   'Jackson Hole Mountain Resort',
-  'Taos',
+  'Taos Resort',
   'Deer Valley Resort',
   'Solitude Mountain Resort',
   'Brighton Resort',
@@ -40,7 +40,15 @@ const locations = [
   'Cypress Mountain',
   'Red Mountain',
   'Tremblant',
-  'Blue Mountain'
+  'Blue Mountain',
+  'Valle Nevado',
+  'Dolomiti Superski',
+  'Kitzbühel',
+  'Zermatt Matterhorn',
+  'Coronet Peak | The Remarkables | Mt Hutt',
+  'Thredbo',
+  'Mt Buller',
+  'Niseko'
 ];
 
 (async() => {
@@ -53,7 +61,9 @@ const locations = [
     if (!body.features.length) {
       console.log(location, null, null, null);
     } else {
-      console.log(`${location}, ${body.features[0].geometry.coordinates[0]}, ${body.features[0].geometry.coordinates[1]}`);
+      const country = body.features[0].context[body.features[0].context.length - 1].text;
+      const state = body.features[0].context[body.features[0].context.length - 2].text;
+      console.log(`${location}, ${body.features[0].geometry.coordinates[0]}, ${body.features[0].geometry.coordinates[1]}, ${country}, ${state}`);
     }
   }
 })();

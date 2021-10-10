@@ -121,10 +121,23 @@ export default function Index({ locations, geojson }) {
           'text-transform': 'uppercase'
         },
         paint: {
-          'text-color': '#FFFFFF',
-          'text-halo-color': '#001f3f',
-          'text-halo-width': 10
+          'text-color': '#001f3f'
         }
+      });
+
+      // click and zoom in to cluster
+      map.current.on('click', 'clusters', (e) => {
+        const features = map.current.queryRenderedFeatures(e.point, {
+          layers: ['clusters']
+        });
+        const clusterId = features[0].properties.cluster_id;
+        map.current.getSource('ikon-locations').getClusterExpansionZoom(clusterId, (err, zoom) => {
+          if (err) return;
+          map.current.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom: zoom
+          });
+        });
       });
     });
   });
